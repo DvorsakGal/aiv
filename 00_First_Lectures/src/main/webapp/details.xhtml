@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>MaleSoncneElektrarne</title>
+</h:head>
+
+<h:body>
+<f:view>
+
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="All skupnosti" outcome="all"/>
+			<p:menuitem value="Add new skupnost" outcome="edit">
+				<f:param name="ime" value="null"/>
+			</p:menuitem>
+		</p:menubar>
+	</h:form>
+
+	<hr />
+
+	<f:metadata>
+		<f:viewParam name="ime" value="#{elektrarne.selectedIme}" />
+	</f:metadata>
+
+	<div class="card">
+		<h5>Podrobni podatki za skupnost</h5>
+		<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+			<h:outputText value="Ime:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.ime}"/>
+
+			<h:outputText value="Ime skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.imeSkrbnika}"/>
+
+			<h:outputText value="Priimek skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.priimekSkrbnika}"/>
+
+			<h:outputText value="Email skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.emailSkrbnika}"/>
+
+			<h:outputText value="Insertred:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.timestamp}"/>
+		</p:panelGrid>
+	</div>
+
+	<!-- fgdggdsgdg
+	TO DO: Implementacija Add new za dodajanje elektrarn v skupnost; torej rabiš dva layera namesto enega
+	- ali rabim posebej edit in details še za mse??? verjetno ja
+	- EDIT za elektrarno (zdaj redirecta na skupnost)	DONE
+	- DELETE za elektrarno (trenutno brez učinka)
+	- DETAILS za elektrarno (trenutno brez učinka) DONE
+
+	!!!: ALI LAHKO ZA LEADING COLUMN PRI MSE IZBEREM NEKAJ POLJUBNEGA (ID, NAZIV...), KER LOKACIJA JE MALO NEPRAKTICNA
+
+	- ZRIHTAJ DA PRI DODAJANJU PREVERI, ALI JE NAZIV ELEKTRARNE IN IME SKUPNOSTI UNIQUE
+	- ODSTRANI IME IN NAZIV IZ INTERFACE-A ZA EDIT - TO DVOJE SE NE BO SPREMINJALO
+	-->
+
+	<hr />
+
+	<p:link outcome="seznamMSEjev" value="Preglej MSE te skupnosti" />
+
+
+</f:view>
+</h:body>
+
+</html>
+
+
