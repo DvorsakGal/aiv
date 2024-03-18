@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Skupnost {
+public class Skupnost implements Serializable {
+    private static final long serialVersionUID = -1069198470521711077L;
     private String ime;
     private String imeSkrbnika;
     private String priimekSkrbnika;

@@ -2,16 +2,22 @@ package si.um.feri.aiv;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import si.um.feri.aiv.dao.MSEDao;
+import si.um.feri.aiv.dao.SkupnostDao;
 import si.um.feri.aiv.dao.SkupnostMemoryDao;
 import si.um.feri.aiv.vao.MalaSoncnaElektrarna;
 import si.um.feri.aiv.vao.Skupnost;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Stateless
 public class SkupBean implements Skup{
-
-    private SkupnostMemoryDao skupDao;
+    @EJB
+    SkupnostDao dao;
+    @EJB
+    MSEDao mseDao;
 
     @Override
     public void Izpisi() {
@@ -26,26 +32,15 @@ public class SkupBean implements Skup{
 
     @Override
     public double vrniKapaciteto(String imeSkupnosti) {
-        Skupnost s = skupDao.find(imeSkupnosti);
-        if (s != null) {
-            double kapaciteta = 0;
-            List<MalaSoncnaElektrarna> elektrarne = s.getElektrarne();
-            for (MalaSoncnaElektrarna mse : elektrarne) {
-                kapaciteta = kapaciteta + mse.getZmogljivost();
+        Skupnost sk = dao.find(imeSkupnosti);
+        double kapaciteta = 0;
+        if (sk != null) {
+            List<MalaSoncnaElektrarna> mses = mseDao.getAll();
+            for (MalaSoncnaElektrarna e : mses) {
+                kapaciteta = kapaciteta + e.getZmogljivost();
             }
-            return kapaciteta;
         }
-        return 0;
+        return kapaciteta;
     }
-
-
-//    public Skupnost find(String ime) {
-//        for (Skupnost s : skupnosti) {
-//            if (s.getIme().equals(ime)) {
-//                return s;
-//            }
-//        }
-//        return null;
-//    }
 
 }
