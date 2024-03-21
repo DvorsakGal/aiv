@@ -44,6 +44,10 @@ public class MseJSFBean implements Serializable {
     private String selectedIme;
 
 
+//    public List<MalaSoncnaElektrarna> getAllMSEs(Skupnost skupnost) throws Exception {
+//        selectedSkupnost = skupnost;
+//        return dao.getAll(selectedSkupnost);
+//    }
     public List<MalaSoncnaElektrarna> getAllMSEs() throws Exception {
         return dao.getAll();
     }

@@ -3,6 +3,8 @@ package si.um.feri.aiv.vao;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import si.um.feri.aiv.mail.EmailMsgListener;
+import si.um.feri.aiv.mail.NotificationService;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,8 +22,10 @@ public class Skupnost implements Serializable {
     private String emailSkrbnika;
     private List<MalaSoncnaElektrarna> elektrarne;
     private LocalDateTime timestamp=LocalDateTime.now();
+    private final NotificationService notificationService;
 
     public Skupnost() {
+        notificationService = new NotificationService();
     }
 
     public Skupnost(String ime, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika) {
@@ -30,6 +34,7 @@ public class Skupnost implements Serializable {
         this.priimekSkrbnika = priimekSkrbnika;
         this.emailSkrbnika = emailSkrbnika;
         this.elektrarne = new ArrayList<>();
+        notificationService = new NotificationService();
     }
 
     public Skupnost(String ime, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika, List<MalaSoncnaElektrarna> elektrarne) {
@@ -38,5 +43,7 @@ public class Skupnost implements Serializable {
         this.priimekSkrbnika = priimekSkrbnika;
         this.emailSkrbnika = emailSkrbnika;
         this.elektrarne = elektrarne;
+        notificationService = new NotificationService();
     }
+
 }

@@ -51,7 +51,7 @@ public class SkupnostMemoryDao implements SkupnostDao, SkupnostDaoRemote{
     public void save(Skupnost skupnost) {
         log.info("DAO-Skupnost: saving... "+skupnost);
         if (find(skupnost.getIme()) != null) {
-            log.info("MSE-Skupnost: editing... "+skupnost);
+            log.info("MSE-Skupnost: editing... "+skupnost); //TUKAJ VIDIS DA CE HOCES DODAT SKUPNOST Z ISTIM IMENOM BO STARO IZBRISO IN NAREDO NOVO!!!
             delete(skupnost.getIme());
         }
         skupnosti.add(skupnost);
@@ -65,6 +65,11 @@ public class SkupnostMemoryDao implements SkupnostDao, SkupnostDaoRemote{
                 s.remove();
             }
         }
+    }
+
+    @Override
+    public void obvestiObstojeceClane() {
+
     }
 
 

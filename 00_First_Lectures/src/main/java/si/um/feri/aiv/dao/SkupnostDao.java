@@ -12,4 +12,5 @@ public interface SkupnostDao {
     Skupnost find(String ime);
     void save(Skupnost skupnost);
     void delete(String ime);
+    void obvestiObstojeceClane();
 }
