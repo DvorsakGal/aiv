@@ -12,6 +12,6 @@ public interface MSEDao {
 
     List<MalaSoncnaElektrarna> getAll();
     MalaSoncnaElektrarna find(String naziv);
-    void save(MalaSoncnaElektrarna mse);
+    MalaSoncnaElektrarna save(MalaSoncnaElektrarna mse);
     void delete(String naziv);
 }

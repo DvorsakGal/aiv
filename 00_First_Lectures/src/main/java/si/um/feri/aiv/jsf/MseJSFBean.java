@@ -12,6 +12,8 @@ import si.um.feri.aiv.dao.MSEDao;
 import si.um.feri.aiv.dao.MSEMemoryDao;
 import si.um.feri.aiv.dao.SkupnostDao;
 import si.um.feri.aiv.dao.SkupnostMemoryDao;
+import si.um.feri.aiv.observer.EmailServiceObserver;
+import si.um.feri.aiv.observer.SkupnostObserver;
 import si.um.feri.aiv.vao.MalaSoncnaElektrarna;
 import si.um.feri.aiv.vao.Skupnost;
 
@@ -22,6 +24,8 @@ import java.util.logging.Logger;
 @Named("elektrarne")
 @SessionScoped
 public class MseJSFBean implements Serializable {
+
+    private SkupnostObserver mailObserver;
 
     private static final long serialVersionUID = -5814108866690269293L;
     Logger log=Logger.getLogger(MseJSFBean.class.toString());
@@ -42,6 +46,12 @@ public class MseJSFBean implements Serializable {
     private Skupnost selectedSkupnost = new Skupnost();
     @Getter
     private String selectedIme;
+    @Getter
+    private int selectedIdSkupnost;
+
+    public MseJSFBean() {
+        mailObserver = new EmailServiceObserver(selectedSkupnost.getEmailSkrbnika());
+    }
 
 
 //    public List<MalaSoncnaElektrarna> getAllMSEs(Skupnost skupnost) throws Exception {
@@ -72,6 +82,7 @@ public class MseJSFBean implements Serializable {
         return daoSkupnost.getAll();
     }
     public String saveSkupnost() throws Exception {
+        System.out.println("klico save");
         daoSkupnost.save(selectedSkupnost);
         return "all";
     }
@@ -80,6 +91,29 @@ public class MseJSFBean implements Serializable {
         daoSkupnost.delete(s.getIme());
         addMessage("Confirmed", "Record deleted");
     }
+
+    public void dodajMSE() {
+        daoSkupnost.shraniMSE(new MalaSoncnaElektrarna(), selectedSkupnost.getIme());
+        selectedSkupnost=daoSkupnost.find(selectedSkupnost.getIme());
+    }
+
+    public void shraniMSE(MalaSoncnaElektrarna mse) {
+        mse.setUrejanje(false);
+        daoSkupnost.shraniMSE(mse, selectedSkupnost.getIme());
+        selectedSkupnost=daoSkupnost.find(selectedSkupnost.getIme());
+    }
+
+    public void izbrisiMSE(MalaSoncnaElektrarna mse) {
+        daoSkupnost.izbrisiMSE(mse.getId(), selectedSkupnost.getIme());
+        selectedSkupnost=daoSkupnost.find(selectedSkupnost.getIme());
+    }
+
+    public void urediMSE(MalaSoncnaElektrarna mse) {
+        mse.setUrejanje(true);
+        daoSkupnost.shraniMSE(mse, selectedSkupnost.getIme());
+        selectedSkupnost=daoSkupnost.find(selectedSkupnost.getIme());
+    }
+
     public void setSelectedIme(String ime) throws Exception {
         selectedIme = ime;
         selectedSkupnost = daoSkupnost.find(ime);
@@ -87,6 +121,14 @@ public class MseJSFBean implements Serializable {
             selectedSkupnost = new Skupnost();
         }
     }
+
+//    public void setSelectedIdSkupnost(int id) throws Exception {
+//        selectedIdSkupnost = id;
+//        selectedSkupnost = daoSkupnost.find(ime);
+//        if (selectedSkupnost == null) {
+//            selectedSkupnost = new Skupnost();
+//        }
+//    }
 
 //PRIMEFACES
     public void confirm() {

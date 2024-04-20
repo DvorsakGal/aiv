@@ -1,6 +1,8 @@
 package si.um.feri.aiv.dao;
 
 import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import si.um.feri.aiv.vao.MalaSoncnaElektrarna;
 import si.um.feri.aiv.vao.Skupnost;
 
@@ -25,36 +27,57 @@ public class MSEMemoryDao implements MSEDao{
     }
 
      */
+    @PersistenceContext
+    EntityManager em;
 
     public MSEMemoryDao() {
-        log.info("Klico si privatni konstruktor... " + this);
+
     }
+
+//    @Override
+//    public List<MalaSoncnaElektrarna> getAll() {
+//        log.info("DAO-MSE: get all");
+//        return elektrarne;
+//    }
 
     @Override
     public List<MalaSoncnaElektrarna> getAll() {
-        log.info("DAO-MSE: get all");
-        return elektrarne;
+        log.info("Ejb bean: get all");
+        return em.createQuery("select elektrarne from MalaSoncnaElektrarna elektrarne").getResultList();
     }
+
+//    @Override
+//    public MalaSoncnaElektrarna find(String naziv) {
+//        log.info("DAO-MSE: finding... " + naziv);
+//        for (MalaSoncnaElektrarna e : elektrarne) {
+//            if (e.getNaziv().equals(naziv)) {
+//                return e;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public MalaSoncnaElektrarna find(String naziv) {
         log.info("DAO-MSE: finding... " + naziv);
-        for (MalaSoncnaElektrarna e : elektrarne) {
-            if (e.getNaziv().equals(naziv)) {
-                return e;
-            }
-        }
-        return null;
+        return em.find(MalaSoncnaElektrarna.class, naziv);
     }
 
+//    @Override
+//    public void save(MalaSoncnaElektrarna mse) {
+//        log.info("DAO-MSE: saving... " + mse);
+//        if(find(mse.getNaziv())!=null) {
+//            log.info("DAO-MSE: editing... "+mse);
+//            delete(mse.getNaziv());
+//        }
+//        elektrarne.add(mse);
+//    }
+
     @Override
-    public void save(MalaSoncnaElektrarna mse) {
-        log.info("DAO-MSE: saving... " + mse);
-        if(find(mse.getNaziv())!=null) {
-            log.info("DAO-MSE: editing... "+mse);
-            delete(mse.getNaziv());
-        }
-        elektrarne.add(mse);
+    public MalaSoncnaElektrarna save(MalaSoncnaElektrarna mse) {
+        log.info("EjbBean: save");
+        em.persist(mse);
+        return mse;
     }
 
     @Override

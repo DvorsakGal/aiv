@@ -8,6 +8,9 @@
 
 <h:body>
 <f:view>
+	<f:metadata>
+		<f:viewParam name="ime" value="#{elektrarne.selectedSkupnost.ime}" />
+	</f:metadata>
 
 	<h:form>
 		<p:menubar>
@@ -21,9 +24,7 @@
 	<hr />
 
 	<h:form>
-		<f:metadata>
-			<f:viewParam name="ime" value="#{elektrarne.selectedIme}" />
-		</f:metadata>
+
 
 		Skrbnik ime: <p:inputText id="skrbnik_ime" value="#{elektrarne.selectedSkupnost.imeSkrbnika}"/><br/>
 		Skrbnik priimek: <p:inputText id="skrbnik_priimek" value="#{elektrarne.selectedSkupnost.priimekSkrbnika}"/><br/>
