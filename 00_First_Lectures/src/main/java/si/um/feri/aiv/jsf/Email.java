@@ -23,22 +23,10 @@ import java.util.EventListener;
 @Setter
 public class Email implements Serializable {
 
-    private static final long serialVersionUID = -275099322001980924L;
 
     InitialContext initialContext = new InitialContext();
     private Session mySession = (Session) initialContext.lookup("java:jboss/mail/MojMail");
 
-    private String to = "gal.dvorsak2002@gmail.com";    //gal.dvorsak@student.um.si
-
-    private String from = "gal.dvorsak@student.um.si";
-
-    private String subject = "Test3";
-
-    private String body = "testing testing 3.0...";
-
-    private String pop3User = "gal.dvorsak2002@gmail.com";  //gal.dvorsak@student.um.si
-
-    private String pop3Password = "novogeslo10";    //Dvorsak20
 
     private String pop3Emails;
 
@@ -90,11 +78,7 @@ public class Email implements Serializable {
         }
     }
 
-    public void resetPop3() {
-        pop3User = "gal.dvorsak@student.um.si";
-        pop3Password = "Dvorsak20";
-        pop3Emails = null;
-    }
+
 
     public void retrieveImap() throws Exception {
         try {
